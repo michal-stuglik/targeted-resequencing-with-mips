@@ -1,6 +1,3 @@
-# The MIT License (MIT)
-# Copyright (c) 2015 Michal Stuglik
-
 from optparse import OptionParser
 import os
 import time

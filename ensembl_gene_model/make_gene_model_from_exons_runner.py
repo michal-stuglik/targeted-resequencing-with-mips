@@ -1,6 +1,3 @@
-# The MIT License (MIT)
-# Copyright (c) 2015 Michal Stuglik
-
 import os
 import make_gene_model_from_exons
 
