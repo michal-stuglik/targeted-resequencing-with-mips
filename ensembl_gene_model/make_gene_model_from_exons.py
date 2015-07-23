@@ -256,7 +256,7 @@ def main(args=[]):
     # ---   generating gene models (fasta and coordinates/info file)
 
     gene_model_seq_hlr = open(options.OUTPUT_FOLDER + os.sep + "gene_model" + ".fasta", 'w')
-    gene_model_gff3_hlr = open(options.OUTPUT_FOLDER + os.sep + "gene_mode" ".gff3", 'w')
+    gene_model_gff3_hlr = open(options.OUTPUT_FOLDER + os.sep + "gene_model" ".gff3", 'w')
 
     gene_model_counter = 0
     for gene_name, gene_obj in genes_dic.iteritems():

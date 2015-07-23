@@ -4,15 +4,24 @@ Created on Mar 2, 2015
 @author: ania.fijarczyk
 
 
+This script reads 'exons_alignment_by_blast_out_global.gff3' file, looks for overlapping exons in each reference,
+and for each overlapping pair of exons, splits them into non-overlapping regions.
+
 gff3 file (input):
 001    .    megablast_hit    525    699    5e-88    +    .    GeneName=001;ExonName=Contig181_1
 001    .    megablast_hit    6508    7527    0.0    +    .    GeneName=001;ExonName=Contig431_2
 001    .    megablast_hit    4145    5588    0.0    +    .    GeneName=001;ExonName=Contig432_3
+
+Reference is given in the first column, exon names are given in the last column ('ExonName')
+
+USAGE: python exon_mip_intersection.py
+
+The output is called 'exon_mip_intersection.out' and consists of three columns:
+reference name, exon(region) start position, exon(region) stop position (numeration as in a gff file)
 '''
 
 from collections import defaultdict
 import operator
-from sets import Set
 
 
 def sort_table(table, col=0):
@@ -27,7 +36,7 @@ def addLists(lista):
     return N
 
 
-def uniq(inlist):  # wybor unikatowych elementow z listy redundantnych elementow
+def uniq(inlist):  # choose unique elements from a list
     # order preserving
     uniques = []
     for item in inlist:
@@ -35,12 +44,19 @@ def uniq(inlist):  # wybor unikatowych elementow z listy redundantnych elementow
             uniques.append(item)
     return uniques
 
+def find_exon_name(instring):
+    info_list = instring.split(';')
+    info_two = [ele.split('=') for ele in info_list]
+    D = {a:b for a,b in info_two}
+    exon_name = D['ExonName']
+    return exon_name
+
 
 def readMe(filename):
     fh = open(filename, 'r')
     linie = fh.readlines()
     k = [ele.split() for ele in linie]
-    n = [(ele[0], int(ele[3]), int(ele[4]), ele[8].split(';')[1].split('=')[1]) for ele in k]
+    n = [(ele[0], int(ele[3]), int(ele[4]), find_exon_name(ele[8])) for ele in k]
     d = defaultdict(list)
     for hit in n:
         d[hit[0]].append(hit[1:])
@@ -81,7 +97,7 @@ if __name__ == '__main__':
             second = Old_list[0]
             first_set = range(first[0], first[1] + 1)
             second_set = range(second[0], second[1] + 1)
-            common = list(Set(first_set) & Set(second_set))
+            common = list(set(first_set) & set(second_set))
             common_sort = common.sort()
             if common:
                 ab = uniq(first_set + second_set)
@@ -123,3 +139,4 @@ if __name__ == '__main__':
     wh.close()
 
     # print G_formated
+
