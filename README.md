@@ -2,7 +2,28 @@
 
 #### Pipeline for identifying exon boundaries in transcripts using pairwise alignments with gene models of model species
 
-## Construction of gene models of model species
+### Before use, set environment 
+
+
+- clone project to local dir & cd
+```bash
+git clone https://github.com/molecol/targeted-resequencing-with-mips.git && cd targeted-resequencing-with-mips
+```
+- create virtualenv for project with python 2
+```bash
+# install virtualenv in user space if need: ... pip install -U virtualenv
+virtualenv .venv --python=python2.7
+```
+- source virtual environment
+```bash
+source .venv/bin/activate
+```
+- install requirements in project's space
+```bash
+pip install -r requirements.txt 
+```
+
+### Construction of gene models of model species
 
 Available scripts are in *ensembl_gene_model* directory
 
@@ -18,7 +39,7 @@ Available scripts are in *ensembl_gene_model* directory
 
 
 
-## Mapping transcripts to gene models
+### Mapping transcripts to gene models
 
 Available scripts are in *exon_boundaries_on_transcript* directory. In this part exons are mapped to transcripts and exon boundaries on transcripts are identified. Run all the steps using *find_exons.sh* bash script.
 
@@ -54,7 +75,7 @@ Available scripts are in *exon_boundaries_on_transcript* directory. In this part
     ```
     The output file, exon_mip_intersection.out is a table containing three columns: reference transcript name, exon start position, exon stop position
     
-## Selecting unique blastn transcript-gene model pairs
+### Selecting unique blastn transcript-gene model pairs
 
 Available script can be found in *unique_blastn_hit* directory. This step is to select transcripts which unambiguously map only to one model species gene. 
 
