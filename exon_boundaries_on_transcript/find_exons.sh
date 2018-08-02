@@ -10,17 +10,17 @@ match_score=1
 mismatch_score=-1
 gapopen=2
 gapextend=1
-
+data_path='../sample'
 
 echo 'FORMATTING DATABASE'
 # Format database, i.e. file with gene models generated with 'make_gene_model_from_exons.py'
 
-formatdb -pF -i ../ensembl_gene_model/gene_model.fasta
+formatdb -pF -i gene_model.fasta
 
 echo 'MAPPING EXONS TO REFERENCE'
 # Map exons onto transcripts using distant megablast parameters
 
-python map_seq_on_exons_by_blast.py -r ../ensembl_gene_model/gene_model.fasta -g ../ensembl_gene_model/gene_model.gff3 -q ../sample/transcripts_sample.fasta -b ../ensembl_gene_model/gene_model.fasta -f output_file -e $e_val -a $best_alignment -w $word_size -n $n_threads -r $match_score -s $mismatch_score -y $gapopen -x $gapextend
+python map_seq_on_exons_by_blast.py -r $data_path/gene_model.fasta -g $data_path/gene_model.gff3 -q $data_path/transcripts_sample.fasta -b $data_path/gene_model.fasta -f output_file -e $e_val -a $best_alignment -w $word_size -n $n_threads -r $match_score -s $mismatch_score -y $gapopen -x $gapextend
 
 # The output file 'exons_alignment_by_blast_out_global.gff3' contains information about coordinates of model exons on transcripts.
 
